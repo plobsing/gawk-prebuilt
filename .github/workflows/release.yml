@@ -20,9 +20,9 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           merge-multiple: true
-      - run: shasum -a 256 bin/gawk_* > SHA256.txt
+      - run: shasum -a 256 gawk_* > SHA256.txt
       - uses: softprops/action-gh-release@v2
         with:
           files: |
-            bin/gawk_*
+            gawk_*
             SHA256.txt
