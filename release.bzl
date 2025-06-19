@@ -18,7 +18,7 @@ def _release_bundle_impl(ctx):
         .add("#!/usr/bin/env bash")
         .add('set -euo pipefail')
         .add('cd "$BUILD_WORKING_DIRECTORY"')
-        .add('cd "$1"; shift')
+        .add('mkdir "$1"; cd "$1"; shift')
         .add_all(ctx.attr.files.items(), map_each=_fmt_install_cmd)
     )
         

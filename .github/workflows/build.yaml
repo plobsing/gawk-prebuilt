@@ -23,7 +23,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: |
-          mkdir bin
           bazel run //:bundle_release -- bin/
       - name: smoke test
         run: ./bin/gawk_linux_amd64 --help
