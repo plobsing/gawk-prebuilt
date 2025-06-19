@@ -26,24 +26,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: |
-          bazel build //:for_all_platforms
-          mv bazel-out/darwin_arm64-opt/bin/external/libarchive\~/tar/bsdtar tar_darwin_arm64
-          mv bazel-out/darwin_amd64-opt/bin/external/libarchive\~/tar/bsdtar tar_darwin_amd64
-          mv bazel-out/linux_arm64_musl-opt/bin/external/libarchive\~/tar/bsdtar tar_linux_arm64
-          mv bazel-bin/external/libarchive\~/tar/bsdtar tar_linux_amd64
+          mkdir bin
+          bazel run //:install_all_unix -- bin/
+      - name: smoke test
+        run: ./bin/gawk_linux_amd64 --help
       - uses: actions/attest-build-provenance@v2
         with:
-          subject-path: 'tar_*'
+          subject-path: 'bin/gawk_*'
       - uses: actions/upload-artifact@v4
         id: upload
         with:
           name: linux
           retention-days: 1
-          path: |
-            tar_darwin_arm64
-            tar_darwin_amd64
-            tar_linux_arm64
-            tar_linux_amd64
+          path: 'bin/gawk_*'
   build_windows:
     name: windows
     runs-on: windows-2019
@@ -52,20 +47,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: |
-          bazel build @libarchive//tar
-          mv bazel-bin/external/libarchive~/tar/bsdtar.exe tar_windows_x86_64.exe
-          bazel build --platforms @zig_sdk//platform:windows_arm64 @libarchive//tar
-          mv bazel-bin/external/libarchive~/tar/bsdtar.exe tar_windows_arm64.exe
+          mkdir bin
+          bazel run //:install_all_windows -- bin/
       - name: smoke test
-        run: ./tar_windows_x86_64.exe --help
+        run: ./bin/gawk_windows_amd64.exe --help
       - uses: actions/attest-build-provenance@v2
         with:
-          subject-path: 'tar_*'
+          subject-path: 'bin/gawk_*'
       - uses: actions/upload-artifact@v4
         id: upload
         with:
           name: windows
           retention-days: 1
-          path: |
-            tar_windows_arm64.exe
-            tar_windows_x86_64.exe
+          path: 'bin/gawk_*'

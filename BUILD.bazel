@@ -1,22 +1,58 @@
 load("@aspect_bazel_lib//lib:transitions.bzl", "platform_transition_filegroup")
+load("@rules_multirun//:defs.bzl", "command", "multirun")
+load("@bazel_skylib//lib:dicts.bzl", "dicts")
 
-PLATFORMS = {
+UNIX_PLATFORMS = {
     "darwin_amd64": "@zig_sdk//platform:darwin_amd64",
     "darwin_arm64": "@zig_sdk//platform:darwin_arm64",
-    "linux_arm64_musl": "@zig_sdk//libc_aware/platform:linux_arm64_musl",
-    "linux_amd64_musl": "@zig_sdk//libc_aware/platform:linux_amd64_musl",
+    "linux_arm64": "@zig_sdk//libc_aware/platform:linux_arm64_musl",
+    "linux_amd64": "@zig_sdk//libc_aware/platform:linux_amd64_musl",
 }
+
+WINDOWS_PLATFORMS = {
+    "windows_amd64.exe": "@zig_sdk//platform:windows_amd64",
+    "windows_arm64.exe": "@zig_sdk//platform:windows_arm64",
+}
+
+PLATFORMS = dicts.add(
+    UNIX_PLATFORMS,
+    WINDOWS_PLATFORMS,
+)
 
 [
     platform_transition_filegroup(
-        name = "for_" + name,
+        name = "gawk_" + name,
         srcs = ["@gawk"],
         target_platform = platform,
     )
     for name, platform in PLATFORMS.items()
 ]
 
-filegroup(
-    name = "for_all_platforms",
-    srcs = ["for_" + name for name, platform in PLATFORMS.items()],
+[
+    command(
+        name = "install_" + name,
+        command = "install.sh",
+        arguments = [
+		"$(execpath :gawk_" + name + ")",
+		"gawk_" + name,
+	],
+        data = [":gawk_" + name],
+    )
+    for name, platform in PLATFORMS.items()
+]
+
+multirun(
+    name = "install_all_unix",
+    commands = [
+        ":install_" + name
+        for name, platform in UNIX_PLATFORMS.items()
+    ],
+)
+
+multirun(
+    name = "install_all_windows",
+    commands = [
+        ":install_" + name
+        for name, platform in WINDOWS_PLATFORMS.items()
+    ],
 )
