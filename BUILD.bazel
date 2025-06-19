@@ -44,7 +44,7 @@ release_bundle(
         "gawk_darwin_arm64": ":gawk_darwin_arm64",
         "gawk_linux_amd64": ":gawk_linux_amd64",
         "gawk_linux_arm64": ":gawk_linux_arm64",
-        "gawk_windows_amd64": ":gawk_windows_amd64",
-        "gawk_windows_arm64": ":gawk_windows_arm64",
+        "gawk_windows_amd64.exe": ":gawk_windows_amd64",
+        "gawk_windows_arm64.exe": ":gawk_windows_arm64",
     },
 )
