@@ -21,6 +21,7 @@ single_version_override(
     patches = [
         "//:gawk.quote_include_regex.patch",
         "//:gawk.windows_popen.patch",
+        "//:bazel_overlay.windows_linker_allow_multiple_definitions.patch",
     ],
     version = "5.3.2.bcr.1",
 )

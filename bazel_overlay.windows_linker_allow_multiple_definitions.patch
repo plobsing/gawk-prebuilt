@@ -1,0 +1,13 @@
+diff --git BUILD.bazel BUILD.bazel
+index f93bd2a..ae0aea9 100644
+--- BUILD.bazel
++++ BUILD.bazel
+@@ -139,8 +139,6 @@ cc_library(
+         ],
+         "@platforms//os:windows": [
+             "-lws2_32",
+-            # TODO: why there is multiple definitions?
+-            "-Wl,-allow-multiple-definition",
+         ],
+         "//conditions:default": [],
+     }),
