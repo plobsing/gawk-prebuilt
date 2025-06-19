@@ -7,11 +7,8 @@ on:
   pull_request:
   workflow_call:
     outputs:
-      windows:
-        description: "Windows binaries"
-        value: ${{jobs.build_windows.outputs.artifact}}
-      linux:
-        description: "Linux and MacOS binaries"
+      release_bundle:
+        description: "Linux, MacOS, and Windows binaries"
         value: ${{jobs.build.outputs.artifact}}
 permissions:
   id-token: write
@@ -19,7 +16,7 @@ permissions:
   attestations: write
 jobs:
   build:
-    name: darwin and linux
+    name: Build Gawk binaries
     runs-on: ubuntu-latest
     outputs:
       artifact: ${{steps.upload.outputs.artifact-url}}
@@ -27,7 +24,7 @@ jobs:
       - uses: actions/checkout@v4
       - run: |
           mkdir bin
-          bazel run //:install_all_unix -- bin/
+          bazel run //:bundle_release -- bin/
       - name: smoke test
         run: ./bin/gawk_linux_amd64 --help
       - uses: actions/attest-build-provenance@v2
@@ -36,27 +33,6 @@ jobs:
       - uses: actions/upload-artifact@v4
         id: upload
         with:
-          name: linux
-          retention-days: 1
-          path: 'bin/gawk_*'
-  build_windows:
-    name: windows
-    runs-on: windows-2019
-    outputs:
-      artifact: ${{steps.upload.outputs.artifact-url}}
-    steps:
-      - uses: actions/checkout@v4
-      - run: |
-          mkdir bin
-          bazel run //:install_all_windows -- bin/
-      - name: smoke test
-        run: ./bin/gawk_windows_amd64.exe --help
-      - uses: actions/attest-build-provenance@v2
-        with:
-          subject-path: 'bin/gawk_*'
-      - uses: actions/upload-artifact@v4
-        id: upload
-        with:
-          name: windows
+          name: release_bundle
           retention-days: 1
           path: 'bin/gawk_*'

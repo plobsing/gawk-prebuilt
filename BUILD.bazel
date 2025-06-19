@@ -38,19 +38,13 @@ platform_transition_filegroup(
 )
 
 install_script(
-    name = "install_all_unix",
+    name = "bundle_release",
     files = {
         "gawk_darwin_amd64": ":gawk_darwin_amd64",
         "gawk_darwin_arm64": ":gawk_darwin_arm64",
         "gawk_linux_amd64": ":gawk_linux_amd64",
         "gawk_linux_arm64": ":gawk_linux_arm64",
-    },
-)
-
-install_script(
-    name = "install_all_windows",
-    files = {
         "gawk_windows_amd64": ":gawk_windows_amd64",
         "gawk_windows_arm64": ":gawk_windows_arm64",
-    }
+    },
 )
