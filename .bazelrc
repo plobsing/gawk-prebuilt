@@ -7,15 +7,10 @@ common --dynamic_mode=off
 # Don't clobber bazel-out/[platform]/bin
 common --experimental_platform_in_output_dir
 
-# On Linux (targetting linux and macos) use the zig toolchain from hermetic_cc_toolchain
-common:linux --repo_env=BAZEL_DO_NOT_DETECT_CPP_TOOLCHAIN=1
-common:linux --action_env=BAZEL_DO_NOT_DETECT_CPP_TOOLCHAIN=1
-common:linux --host_action_env=BAZEL_DO_NOT_DETECT_CPP_TOOLCHAIN=1
-
-# On Windows, use the host toolchain
-# NB: after https://github.com/uber/hermetic_cc_toolchain/pull/190 is included in a release,
-# this flag should no longer be needed.
-common:windows --noincompatible_enable_cc_toolchain_resolution
+# Use the zig toolchain from hermetic_cc_toolchain
+common --repo_env=BAZEL_DO_NOT_DETECT_CPP_TOOLCHAIN=1
+common --action_env=BAZEL_DO_NOT_DETECT_CPP_TOOLCHAIN=1
+common --host_action_env=BAZEL_DO_NOT_DETECT_CPP_TOOLCHAIN=1
 
 common --incompatible_strict_action_env
 
@@ -27,5 +22,5 @@ common --features=thin_lto
 
 # Compilation Flags for zig-cc
 common --compilation_mode=opt --strip=always
-common:linux --copt -ffunction-sections
-common:linux --copt -fdata-sections
+common --copt -ffunction-sections
+common --copt -fdata-sections
