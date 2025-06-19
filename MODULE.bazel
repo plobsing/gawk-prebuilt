@@ -11,3 +11,11 @@ register_toolchains(
     "@zig_sdk//toolchain:darwin_amd64",
     "@zig_sdk//toolchain:darwin_arm64",
 )
+
+# Disambiguate regex.h to use Gawk's version and not what might be found in the sysroot.
+single_version_override(
+    module_name = "gawk",
+    patch_strip = 0,
+    patches = ["//:gawk.quote_include_regex.patch"],
+    version = "5.3.2.bcr.1",
+)

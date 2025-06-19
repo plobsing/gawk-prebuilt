@@ -1,0 +1,39 @@
+diff --git awk.h awk.h
+index 7fe6992..f0dc4ed 100644
+--- awk.h
++++ awk.h
+@@ -178,7 +178,7 @@ typedef int off_t;
+ #endif
+ #endif
+ 
+-#include "regex.h"
++#include "support/regex.h"
+ #include "dfa.h"
+ typedef struct Regexp {
+ 	struct re_pattern_buffer pat;
+diff --git support/dfa.h support/dfa.h
+index c721be9..d8fce8d 100644
+--- support/dfa.h
++++ support/dfa.h
+@@ -28,7 +28,7 @@
+ #endif /* GAWK */
+ 
+ #include "idx.h"
+-#include <regex.h>
++#include "regex.h"
+ #include <stddef.h>
+ #include <stdlib.h>
+ 
+diff --git support/regex.c support/regex.c
+index f5f6552..7f9474e 100644
+--- support/regex.c
++++ support/regex.c
+@@ -63,7 +63,7 @@
+    #undefs RE_DUP_MAX and sets it to the right value.  */
+ #include <limits.h>
+ 
+-#include <regex.h>
++#include "regex.h"
+ #include "regex_internal.h"
+ 
+ #include "regex_internal.c"
