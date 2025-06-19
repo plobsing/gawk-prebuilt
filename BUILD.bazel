@@ -1,58 +1,56 @@
 load("@aspect_bazel_lib//lib:transitions.bzl", "platform_transition_filegroup")
-load("@rules_multirun//:defs.bzl", "command", "multirun")
-load("@bazel_skylib//lib:dicts.bzl", "dicts")
+load(":install.bzl", "install_script")
 
-UNIX_PLATFORMS = {
-    "darwin_amd64": "@zig_sdk//platform:darwin_amd64",
-    "darwin_arm64": "@zig_sdk//platform:darwin_arm64",
-    "linux_arm64": "@zig_sdk//libc_aware/platform:linux_arm64_musl",
-    "linux_amd64": "@zig_sdk//libc_aware/platform:linux_amd64_musl",
-}
-
-WINDOWS_PLATFORMS = {
-    "windows_amd64.exe": "@zig_sdk//platform:windows_amd64",
-    "windows_arm64.exe": "@zig_sdk//platform:windows_arm64",
-}
-
-PLATFORMS = dicts.add(
-    UNIX_PLATFORMS,
-    WINDOWS_PLATFORMS,
+platform_transition_filegroup(
+    name = "gawk_darwin_amd64",
+    srcs = ["@gawk"],
+    target_platform = "@zig_sdk//platform:darwin_amd64",
 )
 
-[
-    platform_transition_filegroup(
-        name = "gawk_" + name,
-        srcs = ["@gawk"],
-        target_platform = platform,
-    )
-    for name, platform in PLATFORMS.items()
-]
+platform_transition_filegroup(
+    name = "gawk_darwin_arm64",
+    srcs = ["@gawk"],
+    target_platform = "@zig_sdk//platform:darwin_arm64",
+)
 
-[
-    command(
-        name = "install_" + name,
-        command = "install.sh",
-        arguments = [
-		"$(execpath :gawk_" + name + ")",
-		"gawk_" + name,
-	],
-        data = [":gawk_" + name],
-    )
-    for name, platform in PLATFORMS.items()
-]
+platform_transition_filegroup(
+    name = "gawk_linux_amd64",
+    srcs = ["@gawk"],
+    target_platform = "@zig_sdk//libc_aware/platform:linux_amd64_musl",
+)
 
-multirun(
+platform_transition_filegroup(
+    name = "gawk_linux_arm64",
+    srcs = ["@gawk"],
+    target_platform = "@zig_sdk//libc_aware/platform:linux_arm64_musl",
+)
+
+platform_transition_filegroup(
+    name = "gawk_windows_amd64",
+    srcs = ["@gawk"],
+    target_platform = "@zig_sdk//platform:windows_amd64",
+)
+
+platform_transition_filegroup(
+    name = "gawk_windows_arm64",
+    srcs = ["@gawk"],
+    target_platform = "@zig_sdk//platform:windows_arm64",
+)
+
+install_script(
     name = "install_all_unix",
-    commands = [
-        ":install_" + name
-        for name, platform in UNIX_PLATFORMS.items()
-    ],
+    files = {
+        "gawk_darwin_amd64": ":gawk_darwin_amd64",
+        "gawk_darwin_arm64": ":gawk_darwin_arm64",
+        "gawk_linux_amd64": ":gawk_linux_amd64",
+        "gawk_linux_arm64": ":gawk_linux_arm64",
+    },
 )
 
-multirun(
+install_script(
     name = "install_all_windows",
-    commands = [
-        ":install_" + name
-        for name, platform in WINDOWS_PLATFORMS.items()
-    ],
+    files = {
+        "gawk_windows_amd64": ":gawk_windows_amd64",
+        "gawk_windows_arm64": ":gawk_windows_arm64",
+    }
 )
