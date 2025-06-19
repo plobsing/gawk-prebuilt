@@ -1,0 +1,5 @@
+GNU Awk is licensed under the GNU General Public License Version 3 (GPL-3.0).
+Patches to GNU Awk in this repository are similarly licensed under GPL-3.0.
+Artifacts built and released by this repository are subject to the terms and conditions of that license.
+
+All other build configuration from this repository is licensed under Apache License Version 2.0 (Apache-2.0).
