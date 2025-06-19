@@ -1,0 +1,22 @@
+diff --git pc/popen.c pc/popen.c
+index dff8ec9..f8349f5 100644
+--- pc/popen.c
++++ pc/popen.c
+@@ -29,6 +29,8 @@
+ #undef popen
+ #undef pclose
+ #undef system
++#define popen  _popen
++#define pclose _pclose
+ 
+ #ifndef _NFILE
+ #define _NFILE 40
+@@ -304,7 +306,7 @@ os_pclose( FILE * current)
+ 	rval = -1;
+ 	if ((fd = dup(fileno(stdin))) != -1) {
+ 	  char *mode = pipes[cur].pmode; *mode = 'r';
+-	  if (current = freopen(pipes[cur].name, mode, stdin)) {
++	  if ((current = freopen(pipes[cur].name, mode, stdin))) {
+ 	    rval = os_system(pipes[cur].command);
+ 	    fclose(current);
+ 	    if (dup2(fd, fileno(stdin)) == -1) rval = -1;
