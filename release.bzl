@@ -8,7 +8,7 @@ def _fmt_install_cmd(item):
 
     return 'install "$@" "$BUILD_WORKING_DIRECTORY"/"{src}" "{name}"'.format(src=src.path, name=name)
 
-def _install_script_impl(ctx):
+def _release_bundle_impl(ctx):
     output = ctx.actions.declare_file(
         "{name}_/{name}".format(name = ctx.attr.name),
     )
@@ -40,8 +40,8 @@ def _install_script_impl(ctx):
     ]
 
 
-install_script = rule(
-    _install_script_impl,
+release_bundle = rule(
+    _release_bundle_impl,
     attrs = {
         "files": attr.string_keyed_label_dict(),
     },

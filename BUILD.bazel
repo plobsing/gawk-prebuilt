@@ -1,5 +1,5 @@
 load("@aspect_bazel_lib//lib:transitions.bzl", "platform_transition_filegroup")
-load(":install.bzl", "install_script")
+load(":release.bzl", "release_bundle")
 
 platform_transition_filegroup(
     name = "gawk_darwin_amd64",
@@ -37,7 +37,7 @@ platform_transition_filegroup(
     target_platform = "@zig_sdk//platform:windows_arm64",
 )
 
-install_script(
+release_bundle(
     name = "bundle_release",
     files = {
         "gawk_darwin_amd64": ":gawk_darwin_amd64",
