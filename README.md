@@ -8,7 +8,7 @@ To use this binary under Bazel, see https://registry.bazel.build/modules/awk.bzl
 
 ## Attribution
 
-The [`gawk` module](https://github.com/aspect-build) on the Bazel registry is maintained by
+The [`gawk` module](https://registry.bazel.build/modules/gawk) on the Bazel registry is maintained by
 [UebelAndre](https://github.com/UebelAndre) and
 [Sahin Yort](https://github.com/thesayyn).
 
