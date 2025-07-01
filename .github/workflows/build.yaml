@@ -37,6 +37,7 @@ jobs:
           path: 'bin/gawk_*'
   test:
     strategy:
+      fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
     runs-on: ${{ matrix.os }}
