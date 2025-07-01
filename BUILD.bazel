@@ -56,4 +56,7 @@ platform(
         "@platforms//os:linux",
         "@zig_sdk//libc:musl",
     ],
+    parents = [
+	"@platforms//host:host",
+    ],
 )
