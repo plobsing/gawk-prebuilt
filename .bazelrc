@@ -24,3 +24,5 @@ common --features=thin_lto
 common --compilation_mode=opt --strip=always
 common --copt -ffunction-sections
 common --copt -fdata-sections
+
+common:linux --platforms //:linux_musl

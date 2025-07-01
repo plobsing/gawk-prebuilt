@@ -48,3 +48,12 @@ release_bundle(
         "gawk_windows_arm64.exe": ":gawk_windows_arm64",
     },
 )
+
+# @zig_sdk//libc_aware/platform:linux_*_musl without arch constraint
+platform(
+    name = "linux_musl",
+    constraint_values = [
+        "@platforms//os:linux",
+        "@zig_sdk//libc:musl",
+    ],
+)
