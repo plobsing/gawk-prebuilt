@@ -1,0 +1,14 @@
+diff --git test/BUILD.bazel test/BUILD.bazel
+index 28a1eab..d6307db 100644
+--- test/BUILD.bazel
++++ test/BUILD.bazel
+@@ -74,7 +74,8 @@ AWK_TESTS = [
+         ],
+         outs = [awk + "_gen.out"],
+         cmd = """
+-$(execpath  //:gawk) -f $(execpath {AWK}.awk) < {IN} > $@ || echo "EXIT CODE: $$?" >> $@
++cp $(execpath {AWK}.awk) $$(basename $(execpath {AWK}.awk))
++$(execpath  //:gawk) -f $$(basename $(execpath {AWK}.awk)) <{IN} >$@ 2>&1 || echo "EXIT CODE: $$?" >>$@
+         """.format(
+             AWK = awk,
+             IN = "/dev/null" if awk not in IN else "$(execpath {}.in)".format(awk),
