@@ -57,6 +57,6 @@ platform(
         "@zig_sdk//libc:musl",
     ],
     parents = [
-	"@platforms//host:host",
+        "@platforms//host:host",
     ],
 )
