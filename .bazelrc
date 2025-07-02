@@ -27,4 +27,4 @@ common --copt -fdata-sections
 
 common:linux --platforms //:linux_musl
 
-common --build_tests_only
+test --build_tests_only
