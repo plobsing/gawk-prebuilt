@@ -24,7 +24,7 @@ index 23271c8..2a8eba8 100644
          name = awk + "_diff_test",
          file1 = awk + "_gen.out",
          file2 = awk + ".ok",
- 	tags = ["manual"] if awk in TODO_TESTS else [],
+         tags = ["manual"] if awk in TODO_TESTS else [],
 +        target_compatible_with = select({
 +            "@platforms//os:osx": [],
 +            "@platforms//os:linux": [],

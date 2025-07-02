@@ -1,7 +1,7 @@
-diff --git test/BUILD.bazel test/BUILD.new.bazel
+diff --git test/BUILD.bazel test/BUILD.bazel
 index 28a1eab..bb78974 100644
 --- test/BUILD.bazel
-+++ test/BUILD.new.bazel
++++ test/BUILD.bazel
 @@ -83,18 +83,16 @@ $(execpath  //:gawk) -f $(execpath {AWK}.awk) < {IN} > $@ || echo "EXIT CODE: $$
      for awk in AWK_TESTS
  ]
@@ -15,7 +15,7 @@ index 28a1eab..bb78974 100644
          name = awk + "_diff_test",
          file1 = awk + "_gen.out",
          file2 = awk + ".ok",
-+	tags = ["manual"] if awk in TODO_TESTS else [],
++        tags = ["manual"] if awk in TODO_TESTS else [],
      )
      for awk in AWK_TESTS
 -    if awk in OK and awk not in [
