@@ -15,12 +15,11 @@ register_toolchains(
     "@zig_sdk//toolchain:windows_arm64",
 )
 
-# Disambiguate regex.h to use Gawk's version and not what might be found in the sysroot.
 single_version_override(
     module_name = "gawk",
     patch_strip = 0,
     patches = [
-        "//:gawk.quote_include_regex.patch",
+        "//:gawk.quote_include_regex.patch",  # Disambiguate regex.h to use Gawk's version and not what might be found in the sysroot.
         "//:gawk.windows_popen.patch",
         "//:bazel_overlay.windows_linker_allow_multiple_definitions.patch",
 	"//:bazel_overlay.rules_shell_dep.patch",
