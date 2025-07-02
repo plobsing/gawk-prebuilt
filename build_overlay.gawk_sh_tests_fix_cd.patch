@@ -1,7 +1,7 @@
-diff --git test/BUILD.bazel test/BUILD.new.bazel
+diff --git test/BUILD.bazel test/BUILD.bazel
 index 28a1eab..d6e1cf1 100644
 --- test/BUILD.bazel
-+++ test/BUILD.new.bazel
++++ test/BUILD.bazel
 @@ -10,7 +10,7 @@ write_file(
          "REALEXEC=$(realpath $1)",
          "export GAWK=$(realpath $2)",
