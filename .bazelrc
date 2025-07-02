@@ -26,3 +26,5 @@ common --copt -ffunction-sections
 common --copt -fdata-sections
 
 common:linux --platforms //:linux_musl
+
+common --build_tests_only
