@@ -1,0 +1,13 @@
+diff --git test/BUILD.bazel test/BUILD.new.bazel
+index 28a1eab..d6e1cf1 100644
+--- test/BUILD.bazel
++++ test/BUILD.new.bazel
+@@ -10,7 +10,7 @@ write_file(
+         "REALEXEC=$(realpath $1)",
+         "export GAWK=$(realpath $2)",
+         "export AWK=$(realpath $2)",
+-        "cd test",
++        "cd $(dirname $REALEXEC)",
+         "$REALEXEC",
+     ],
+     is_executable = True,
