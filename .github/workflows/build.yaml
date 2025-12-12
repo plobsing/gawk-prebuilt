@@ -29,7 +29,7 @@ jobs:
       - uses: actions/attest-build-provenance@v3
         with:
           subject-path: 'bin/gawk_*'
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         id: upload
         with:
           name: release_bundle
